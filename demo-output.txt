@@ -1,0 +1,67 @@
+$ python3 -m unittest test_guard -v
+test_demo_account_computes_and_is_warn (test_guard.TestDemoAndKeys.test_demo_account_computes_and_is_warn) ... ok
+test_demo_status_is_labelled_demo (test_guard.TestDemoAndKeys.test_demo_status_is_labelled_demo) ... ok
+test_json_output_is_valid_and_key_free (test_guard.TestDemoAndKeys.test_json_output_is_valid_and_key_free) ... ok
+test_live_key_refused (test_guard.TestDemoAndKeys.test_live_key_refused) ... ok
+test_missing_key_refused (test_guard.TestDemoAndKeys.test_missing_key_refused) ... ok
+test_sandbox_key_accepted (test_guard.TestDemoAndKeys.test_sandbox_key_accepted) ... ok
+test_critical_above_90 (test_guard.TestDllLevels.test_critical_above_90) ... ok
+test_critical_room_under_25_dollars (test_guard.TestDllLevels.test_critical_room_under_25_dollars) ... ok
+test_danger_75_to_90 (test_guard.TestDllLevels.test_danger_75_to_90) ... ok
+test_ok_below_50 (test_guard.TestDllLevels.test_ok_below_50) ... ok
+test_profit_day_is_ok_and_room_is_full (test_guard.TestDllLevels.test_profit_day_is_ok_and_room_is_full) ... ok
+test_warn_50_to_75 (test_guard.TestDllLevels.test_warn_50_to_75) ... ok
+test_warn_boundary_exactly_50 (test_guard.TestDllLevels.test_warn_boundary_exactly_50) ... ok
+test_drawdown_breached_is_critical (test_guard.TestEdgeCases.test_drawdown_breached_is_critical) ... ok
+test_drawdown_room_and_floor (test_guard.TestEdgeCases.test_drawdown_room_and_floor) ... ok
+test_exposure_and_margin (test_guard.TestEdgeCases.test_exposure_and_margin) ... ok
+test_flat_account_no_positions (test_guard.TestEdgeCases.test_flat_account_no_positions) ... ok
+test_negative_floating_pnl (test_guard.TestEdgeCases.test_negative_floating_pnl) ... ok
+test_short_position_counts_toward_exposure (test_guard.TestEdgeCases.test_short_position_counts_toward_exposure) ... ok
+test_zero_dll_flat_account (test_guard.TestEdgeCases.test_zero_dll_flat_account) ... ok
+test_zero_dll_with_loss_is_critical (test_guard.TestEdgeCases.test_zero_dll_with_loss_is_critical) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.002s
+
+OK
+
+$ python3 guard.py --demo
+MFP Guard v0.1.0  [DEMO — simulated sandbox-style data, not real]  account: demo-sandbox-10000
+================================================================
+  Alert:    WARN     — DLL over half used
+  Equity:   $  9,845.00   Balance: $ 10,000.00   Floating PnL: $   -155.00
+  Day PnL:  $   -155.00
+  DLL used: $    155.00 / $    300.00  ( 51.7%)   DLL room: $    145.00
+  DD floor: $  9,500.00   Drawdown room: $    345.00
+  Exposure: $  4,102.50  (0.42x equity)   Margin used: $    410.25 (4.2%)
+  Positions open: 2
+  Why: DLL used 51.7% (>= 50%)
+  DEMO DATA — simulated, not a real account.
+
+$ python3 guard.py --demo --json
+{
+  "account_id": "demo-sandbox-10000",
+  "balance": 10000.0,
+  "daily_loss_limit": 300.0,
+  "daily_loss_used": 155.0,
+  "day_pnl": -155.0,
+  "dll_room": 145.0,
+  "dll_used_pct": 51.66666666666667,
+  "drawdown_floor": 9500.0,
+  "drawdown_room": 345.0,
+  "equity": 9845.0,
+  "exposure_multiple": 0.41670898933468764,
+  "floating_pnl": -155.0,
+  "gross_exposure": 4102.5,
+  "level": "WARN",
+  "margin_pct": 4.167089893346876,
+  "margin_used": 410.25,
+  "position_count": 2,
+  "reasons": [
+    "DLL used 51.7% (>= 50%)"
+  ],
+  "source": "DEMO \u2014 simulated sandbox-style data, not real",
+  "starting_balance": 10000.0,
+  "tool": "mfp-guard/0.1.0"
+}
